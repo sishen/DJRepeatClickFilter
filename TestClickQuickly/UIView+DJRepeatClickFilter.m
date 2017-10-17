@@ -207,7 +207,9 @@ NS_INLINE BOOL DJ_addSwizzleMethod(Class aClass, SEL swizzledSelector)
     }
     
     if ([UIView dj_repeat_checkSafe]) {
-        bCanTap = NO;
+        if (![NSStringFromSelector(action) hasPrefix:@"growingHook"]) {
+          bCanTap = NO;
+        }
         [self dj_repeat_sendAction:action to:target forEvent:event];
     }
 }
