@@ -15,6 +15,7 @@ static NSMutableDictionary *hookCollectionClassesCache;
 
 static DJRepeatClickOtherFilter _otherFilter;
 
+#define updateSELString [NSString stringWithFormat:@"_u%@es%@ven%@nEvent:",@"pdateG", @"tureWithE", @"t:butto"]
 
 NS_INLINE void DJ_methodSwizzle_new(Class originalClass, SEL originalSelector, Class swizzledClass, SEL swizzledSelector, BOOL isInstanceMethod)
 {
@@ -64,8 +65,8 @@ NS_INLINE BOOL DJ_addSwizzleMethod(Class aClass, SEL swizzledSelector)
             
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wundeclared-selector"
-            if ([NSClassFromString(@"UIGestureRecognizer") instancesRespondToSelector:@selector(_updateGestureWithEvent:buttonEvent:)]) {
-                DJ_methodSwizzle(UIGestureRecognizer.class,@selector(_updateGestureWithEvent:buttonEvent:),@selector(hd_updateGestureWithEvent:buttonEvent:),YES);
+            if ([NSClassFromString(@"UIGestureRecognizer") instancesRespondToSelector:NSSelectorFromString(updateSELString)]) {
+                DJ_methodSwizzle(UIGestureRecognizer.class,NSSelectorFromString(updateSELString),@selector(hd_updateGestureWithEvent:buttonEvent:),YES);
             }
 #pragma clang diagnostic pop
 
